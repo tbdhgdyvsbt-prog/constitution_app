@@ -13,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Constitution? constitution;
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -21,12 +22,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> loadData() async {
-    final String response = await rootBundle.loadString('assets/data/constitution.json');
-    final data = await json.decode(response);
-    setState(() {
-      // Wrapping the top-level list into a map for the model
-      constitution = Constitution(chapters: (data as List).map((i) => Chapter.fromJson(i)).toList());
-    });
+    try {
+      final String response = await rootBundle.loadString('assets/data/constitution.json');
+      final data = await json.decode(response);
+      setState(() {
+        constitution = Constitution(chapters: (data as List).map((i) => Chapter.fromJson(i)).toList());
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'حدث خطأ في تحميل الدستور. يرجى المحاولة مرة أخرى.';
+        constitution = null;
+      });
+    }
   }
 
   @override
@@ -36,7 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('دستور رابطة الطلاب ذوي الإعاقة البصرية'),
       ),
       body: constitution == null
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(
+              child: _errorMessage == null
+                  ? const CircularProgressIndicator()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(_errorMessage!, style: Theme.of(context).textTheme.bodyMedium),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: loadData,
+                          child: const Text('إعادة المحاولة'),
+                        ),
+                      ],
+                    ),
+            )
           : ListView.builder(
               itemCount: constitution!.chapters.length,
               itemBuilder: (context, index) {
