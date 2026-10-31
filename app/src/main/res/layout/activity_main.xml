@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Revision layout.
+  The two glass panels are DraggablePanelLayout instances: long-press
+  anywhere on a panel (including on the address field) for ~450 ms, then
+  drag it like a home-screen icon. Release saves its position.
+  The WebView fills the screen underneath them.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_space">
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="top"
+        android:progressTint="@color/accent_cyan"
+        android:visibility="gone" />
+
+    <!-- Draggable address / search bar -->
+    <com.revision.browser.DraggablePanelLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/glass_panel"
+        android:elevation="8dp"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="8dp"
+                android:text="⋮⋮"
+                android:textColor="@color/accent_cyan"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/urlInput"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/glass_button"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionGo"
+                android:inputType="textUri"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:singleLine="true"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_muted"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/goButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/glass_button"
+                android:text="@string/go"
+                android:textColor="@color/accent_cyan" />
+        </LinearLayout>
+    </com.revision.browser.DraggablePanelLayout>
+
+    <!-- Draggable quick-actions / privacy panel -->
+    <com.revision.browser.DraggablePanelLayout
+        android:id="@+id/quickPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/glass_panel"
+        android:elevation="8dp"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/backButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/back"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/forwardButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/forward"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/reloadButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/reload"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/shieldButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/shield_on"
+                    android:textColor="@color/safe_green"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/newTabButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/new_tab"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/tabsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/tabs"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/clearButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/clear_data"
+                    android:textColor="@color/danger"
+                    android:textSize="12sp" />
+                <Button
+                    android:id="@+id/resetLayoutButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/glass_button"
+                    android:text="@string/reset_layout"
+                    android:textColor="@color/text_primary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/clearOnExitCheck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/accent_cyan"
+                    android:text="@string/clear_on_exit"
+                    android:textColor="@color/text_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/statusText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/private_note"
+                    android:textColor="@color/text_muted"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.revision.browser.DraggablePanelLayout>
+
+    <TextView
+        android:id="@+id/dragHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/glass_panel"
+        android:padding="12dp"
+        android:text="@string/drag_hint"
+        android:textColor="@color/accent_cyan"
+        android:textSize="13sp"
+        android:visibility="gone" />
+</FrameLayout>
