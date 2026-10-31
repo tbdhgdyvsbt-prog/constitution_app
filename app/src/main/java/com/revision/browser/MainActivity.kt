@@ -20,6 +20,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -93,7 +94,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        webView = findViewById(R.id.webView)
+        // WebView is created in code, not inflated from XML: if the
+        // device's WebView provider is missing or broken, creating it
+        // throws here, and we show a message instead of crashing.
+        val webContainer = findViewById<FrameLayout>(R.id.webContainer)
+        try {
+            webView = WebView(this)
+            webView.layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+            webContainer.addView(webView)
+        } catch (e: Throwable) {
+            val message = TextView(this).apply {
+                text = "تعذر تشغيل WebView على هذا الجهاز:\n" +
+                    "${e.javaClass.simpleName}: ${e.message}\n\n" +
+                    "يرجى تفعيل Android System WebView من متجر Play ثم إعادة فتح التطبيق."
+                textSize = 16f
+                setPadding(48, 48, 48, 48)
+            }
+            webContainer.addView(message)
+            return
+        }
         urlInput = findViewById(R.id.urlInput)
         progressBar = findViewById(R.id.progressBar)
         statusText = findViewById(R.id.statusText)
@@ -350,15 +372,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (webView.canGoBack()) webView.goBack() else super.onBackPressed()
+        if (::webView.isInitialized && webView.canGoBack()) webView.goBack() else super.onBackPressed()
     }
 
     override fun onDestroy() {
-        if (clearOnExitCheck.isChecked) {
+        if (::clearOnExitCheck.isInitialized && clearOnExitCheck.isChecked) {
             // Best-effort clear on exit; the WebView is being torn down.
             try {
-                webView.clearCache(true)
-                webView.clearHistory()
+                if (::webView.isInitialized) {
+                    webView.clearCache(true)
+                    webView.clearHistory()
+                }
                 CookieManager.getInstance().removeAllCookies(null)
                 WebStorage.getInstance().deleteAllData()
             } catch (e: Exception) {
