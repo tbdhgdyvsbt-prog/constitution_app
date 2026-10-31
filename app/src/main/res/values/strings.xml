@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Revision</string>
+    <string name="search_hint">Search or enter address…  •  ابحث أو أدخل عنواناً</string>
+    <string name="go">Go</string>
+    <string name="back">Back</string>
+    <string name="forward">Forward</string>
+    <string name="reload">Reload</string>
+    <string name="new_tab">New tab</string>
+    <string name="tabs">Tabs</string>
+    <string name="clear_data">Clear data</string>
+    <string name="clear_on_exit">Clear on exit</string>
+    <string name="shield_on">Shield ON</string>
+    <string name="shield_off">Shield OFF</string>
+    <string name="reset_layout">Reset layout</string>
+    <string name="drag_hint">Long-press to move — like a home-screen icon</string>
+    <string name="drag_started">Drag mode — move the panel, release to save its place</string>
+    <string name="layout_reset">Layout reset</string>
+    <string name="data_cleared">Browsing data cleared</string>
+    <string name="https_upgraded">Upgraded to HTTPS for your safety</string>
+    <string name="tracker_blocked">Tracker blocked</string>
+    <string name="private_note">Private by default — no history is saved by Revision itself.</string>
+</resources>
