@@ -1,5 +1,9 @@
 <resources>
-    <style name="Theme.Revision" parent="@android:style/Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">@android:color/black</item>
+    <style name="Theme.Revision" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent_cyan</item>
+        <item name="colorPrimaryVariant">@color/accent_violet</item>
+        <item name="android:colorBackground">@color/space_bg</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:windowBackground">@color/space_bg</item>
     </style>
 </resources>
