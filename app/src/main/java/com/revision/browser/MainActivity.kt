@@ -1,22 +1,15 @@
 package com.revision.browser
 
-import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val tv = TextView(this).apply {
-            text = "Revision minimal test - if you can read this, the app opened."
-            textSize = 20f
-            setTextColor(Color.WHITE)
-            setBackgroundColor(Color.BLACK)
-            gravity = Gravity.CENTER
-            setPadding(48, 48, 48, 48)
+        setContentView(R.layout.activity_main)
+        findViewById<TextView>(R.id.statusText)?.apply {
+            text = "Test 2: original layout opened, no WebView."
         }
-        setContentView(tv)
     }
 }
